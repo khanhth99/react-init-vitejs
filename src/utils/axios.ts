@@ -1,9 +1,9 @@
 import axios from 'axios';
-// const { REACT_APP_BASE_URL, REACT_APP_API_TIMEOUT } = process.env;
+const { VITE_BASE_URL, VITE_API_TIMEOUT } = import.meta.env;
 
 const instance = axios.create({
-  baseURL: 'http://localhost:3001',
-  timeout: 60000,
+  baseURL: VITE_BASE_URL,
+  timeout: Number(VITE_API_TIMEOUT),
   headers: {
     'Content-Type': 'application/json',
     Accept: 'application/json',

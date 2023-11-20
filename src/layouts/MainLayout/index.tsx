@@ -6,23 +6,43 @@ import {
   LogoutOutlined,
 } from '@ant-design/icons';
 import { Layout, Menu, Button, theme, Avatar, Typography, Dropdown } from 'antd';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import mainMenu from '@menus/mainMenu';
 import { themeColor } from '@theme/color';
+import { useDispatch, useSelector } from 'react-redux';
+import { clearData, setUserData } from '@containers/App/appSlice';
+import { RootState } from '@store/index';
+import { useQuery } from '@tanstack/react-query';
+import { getMe } from '@services/appServices';
 
 const { Header, Sider, Content } = Layout;
 function MainLayout() {
+  const userData = useSelector((state: RootState) => state.app.userData);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer },
   } = theme.useToken();
-  const { pathname } = window.location;
-  console.log('pathname', pathname);
+
+  const token = localStorage.getItem('token');
+
+  const { data } = useQuery({
+    queryKey: ['userData', token],
+    queryFn: getMe,
+    enabled: !!token,
+  });
+
+  useEffect(() => {
+    if (data) {
+      dispatch(setUserData(data.data));
+    }
+  }, [data]);
 
   const handleItemClick = (event: { key: any }) => {
     if (event.key === 'logout') {
       localStorage.clear();
+      dispatch(clearData());
       navigate('/auth/login');
     }
   };
@@ -117,18 +137,16 @@ function MainLayout() {
           />
           <Dropdown
             menu={{ items, onClick: (e) => handleItemClick(e) }}
-            // overlay={items}
             trigger={['click']}
             className="pr-4 flex self-center items-center cursor-pointer"
           >
             <div
               onClick={(e) => {
-                console.log(e);
                 e.preventDefault();
               }}
             >
               <Avatar size={40} icon={<UserOutlined />} />
-              <Typography className="pl-2 text-gray-100">Nguyễn Duy Khánh</Typography>
+              <Typography className="pl-2 text-gray-100">{userData?.username || ''}</Typography>
             </div>
           </Dropdown>
         </Header>

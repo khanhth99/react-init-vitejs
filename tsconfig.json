@@ -31,6 +31,7 @@
       "@routes/*": ["./src/routes/*"],
       "@store/*": ["./src/store/*"],
       "@utils/*": ["./src/utils/*"],
+      "@services/*": ["./src/services/*"],
       "@theme/*": ["./src/theme/*"],
     }
   },

@@ -9,22 +9,37 @@ import validation from './validation';
 import Page from '@components/Page';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
-import { loginService } from './api';
+import { loginService } from '@services/authServices';
+// import { getMe } from '@containers/App/api';
+// import { setUserData } from '@containers/App/appSlice';
+// import { useDispatch } from 'react-redux';
 
 const { Title } = Typography;
 const Auth: React.FC = () => {
   const navigate = useNavigate();
 
-  const { mutate, isPending } = useMutation({
+  const { mutate: mutateLogin, isPending } = useMutation({
     mutationFn: loginService,
     onSuccess: (response) => {
       localStorage.setItem('token', response.data.token);
+      // mutateGetMe();
       navigate('/');
     },
     onError: () => {
       alert('Login failed!');
     },
   });
+
+  // const dispatch = useDispatch();
+
+  // const { mutate: mutateGetMe } = useMutation({
+  //   mutationFn: getMe,
+  //   onSuccess: (response) => {
+  //     if (response.data) {
+  //       dispatch(setUserData(response.data));
+  //     }
+  //   },
+  // });
 
   const {
     handleSubmit,
@@ -38,8 +53,7 @@ const Auth: React.FC = () => {
   });
 
   const onSubmit = async (data: any) => {
-    localStorage.setItem('token', 'adadad');
-    mutate({
+    mutateLogin({
       ...data,
     });
   };

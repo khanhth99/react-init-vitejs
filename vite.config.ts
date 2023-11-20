@@ -18,6 +18,7 @@ export default defineConfig({
       { find: '@store', replacement: path.resolve(__dirname, 'src/store') },
       { find: '@utils', replacement: path.resolve(__dirname, 'src/utils') },
       { find: '@theme', replacement: path.resolve(__dirname, 'src/theme') },
+      { find: '@services', replacement: path.resolve(__dirname, 'src/services') },
     ],
   },
 });
