@@ -15,7 +15,7 @@ export default defineConfig({
       { find: '@layouts', replacement: path.resolve(__dirname, 'src/layouts') },
       { find: '@menus', replacement: path.resolve(__dirname, 'src/menus') },
       { find: '@routes', replacement: path.resolve(__dirname, 'src/routes') },
-      { find: '@store', replacement: path.resolve(__dirname, 'src/store') },
+      { find: '@stores', replacement: path.resolve(__dirname, 'src/stores') },
       { find: '@utils', replacement: path.resolve(__dirname, 'src/utils') },
       { find: '@theme', replacement: path.resolve(__dirname, 'src/theme') },
       { find: '@services', replacement: path.resolve(__dirname, 'src/services') },

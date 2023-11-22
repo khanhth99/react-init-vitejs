@@ -9,17 +9,17 @@ import { Layout, Menu, Button, theme, Avatar, Typography, Dropdown } from 'antd'
 import { useState, useEffect } from 'react';
 import mainMenu from '@menus/mainMenu';
 import { themeColor } from '@theme/color';
-import { useDispatch, useSelector } from 'react-redux';
-import { clearData, setUserData } from '@containers/App/appSlice';
-import { RootState } from '@store/index';
 import { useQuery } from '@tanstack/react-query';
 import { getMe } from '@services/appServices';
+import { useAppContext } from '@stores/appContext';
 
 const { Header, Sider, Content } = Layout;
 function MainLayout() {
-  const userData = useSelector((state: RootState) => state.app.userData);
+  const {
+    state: { userData },
+    dispatch,
+  } = useAppContext();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer },
@@ -35,14 +35,14 @@ function MainLayout() {
 
   useEffect(() => {
     if (data) {
-      dispatch(setUserData(data.data));
+      dispatch({ type: 'UPDATE_USERDATA', payload: data.data });
     }
   }, [data]);
 
   const handleItemClick = (event: { key: any }) => {
     if (event.key === 'logout') {
       localStorage.clear();
-      dispatch(clearData());
+      dispatch({ type: 'RESET' });
       navigate('/auth/login');
     }
   };

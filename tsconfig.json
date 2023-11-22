@@ -29,10 +29,10 @@
       "@layouts/*": ["./src/layouts/*"],
       "@menus/*": ["./src/menus/*"],
       "@routes/*": ["./src/routes/*"],
-      "@store/*": ["./src/store/*"],
       "@utils/*": ["./src/utils/*"],
       "@services/*": ["./src/services/*"],
       "@theme/*": ["./src/theme/*"],
+      "@stores/*": ["src/stores/*"],
     }
   },
   "include": ["src"],
